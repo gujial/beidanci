@@ -1,0 +1,6 @@
+<view class="container">
+  <text class="welcome">{{welcomeText}}</text>
+  <button bindtap="goToLearn">开始学习</button>
+  <button bindtap="goToRanking">查看排行榜</button>
+  <text class="intro">记得经常复习，提高你的英语词汇量吧！</text>
+</view>

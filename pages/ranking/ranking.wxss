@@ -1,0 +1,30 @@
+.container {
+  padding: 20px;
+}
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-size: 14px;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.user-rank {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.rankings {
+  margin-bottom: 20px;
+}
+.ranking-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+button {
+  width: 80%;
+}

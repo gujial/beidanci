@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="word-section">
+    <text class="word">{{currentWord.text}}</text>
+  </view>
+  <view class="options-section">
+    <button wx:for="{{options}}" wx:key="index" bindtap="selectAnswer" data-option="{{item}}">
+      {{item}}
+    </button>
+  </view>
+  <view class="score-section">
+    <text>得分：{{score}}</text>
+    <text>正确：{{correctCount}} 错误：{{incorrectCount}}</text>
+  </view>
+</view>

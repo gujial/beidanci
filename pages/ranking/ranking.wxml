@@ -1,0 +1,13 @@
+<view class="container">
+  <text class="title">排行榜</text>
+  <text class="subtitle">注意：以下排名基于本地存储的数据</text>
+  <view class="user-rank">
+    <text>你的排名：第{{rankings.indexOf(userRank) + 1}}名 (得分：{{userRank.score}})</text>
+  </view>
+  <view class="rankings">
+    <view wx:for="{{rankings}}" wx:key="index" class="ranking-item">
+      <text>第{{index + 1}}名：{{item.name}} (得分：{{item.score}})</text>
+    </view>
+  </view>
+  <button bindtap="refreshRanking">刷新排行榜</button>
+</view>
