@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/learn/learn",
-    "pages/ranking/ranking"
+    "pages/ranking/ranking",
+    "pages/me/me",
+    "pages/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",

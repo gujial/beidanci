@@ -1,0 +1,23 @@
+<!--pages/me/me.wxml-->
+<view class="container">
+  <view class="users">
+    <!-- 未授权登录状态 -->
+    <view class="userinfo" wx:if="{{!userInfo}}">
+      <image
+        src="https://www.arryblog.com/coffee/default-avatar.png"
+        mode="cover"
+        class="user-avatar"
+      />
+      <text class="user-desc">登录获取更多会员权益</text>
+      <button class="btn-login" bindtap="handleLogin">授权登录</button>
+    </view>
+    <!-- 授权登录状态 -->
+    <view class="userinfo" wx:else>
+      <view class="user-login-suc">
+        <image src="{{userInfo.avatarUrl}}" mode="cover" class="user-avatar" />
+        <text class="user-login-desc">Hi {{userInfo.nickName}} ~ </text>
+      </view>
+      <button class="btn-login" bindtap="outLogin">退出登录</button>
+    </view>
+  </view>
+</view>

@@ -14,5 +14,11 @@ Page({
     wx.navigateTo({
       url: '/pages/ranking/ranking'
     })
+  },
+  // 跳转到我的页面
+  goToMe: function() {
+      wx.navigateTo({
+        url: '/pages/me/me',
+      })
   }
 })
