@@ -5,7 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    canIUsenickNameComp: wx.canIUse('button.open-type.chooseAvatar'),
+    canIUseGetUserProfile: wx.canIUse('getUserProfile'),
+    hasUserInfo: false,
+    userInfo: {},
+    avatarUrl: '',
+    nickName: '',
+    motto: '欢迎注册'
   },
 
   /**
@@ -62,5 +68,49 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  onChooseAvatar(e) {
+    this.setData({
+      avatarUrl: e.detail.avatarUrl
+    });
+  },
+
+  onInputChange(e) {
+    this.setData({
+      nickName: e.detail.value
+    });
+  },
+
+  async onRegister() {
+    const { avatarUrl, nickName } = this.data;
+    if (!avatarUrl || !nickName) {
+      wx.showToast({ title: '请完善信息', icon: 'none' });
+      return;
+    }
+    wx.showLoading({ title: '注册中...' });
+    console.log({
+        avatarUrl,
+        nickName
+      })
+    const response = await wx.cloud.callFunction({
+      name: 'register',
+      data: {
+        avatarUrl,
+        nickName
+      }
+    });
+
+    wx.hideLoading();
+    if (response.result.code === 0) {
+      wx.setStorageSync('userInfo', response.result.data);
+      wx.navigateBack();
+    } else {
+      wx.showToast({
+        title: response.result.msg,
+        icon: 'none',
+        duration: 2000
+      });
+    }
   }
 })
