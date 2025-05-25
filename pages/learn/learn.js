@@ -82,6 +82,25 @@ Page({
     saveScore: function() {
       const score = this.data.score
       wx.setStorageSync('userScore', score)
-    }
+    },
+
+    onUnload: function () {
+        const finalScore = this.data.score
+        if (finalScore > 0) {
+          wx.cloud.callFunction({
+            name: 'score',
+            data: {
+              score: finalScore
+            },
+            success: res => {
+              console.log('分数已记录：', res.result)
+            },
+            fail: err => {
+              console.error('记录分数失败：', err)
+            }
+          })
+        }
+      }
+      
   })
   
