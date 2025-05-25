@@ -89,3 +89,34 @@
     border: none;
     border-radius: 0;
   }
+  .menu-list {
+    margin-top: 20rpx;
+    background-color: #fff;
+    border-radius: 20rpx;
+    padding: 20rpx 0;
+    width: 100%;
+  }
+  
+  .menu-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25rpx 30rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+  
+  .menu-text {
+    font-size: 32rpx;
+    color: #333;
+  }
+  
+  .menu-arrow {
+    font-size: 32rpx;
+    color: #ccc;
+  }
+  

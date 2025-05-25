@@ -1,4 +1,4 @@
-<!--pages/me/me.wxml-->
+<!-- pages/me/me.wxml -->
 <view class="container">
   <view class="users">
     <!-- 未授权登录状态 -->
@@ -11,6 +11,7 @@
       <text class="user-desc">登录获取更多会员权益</text>
       <button class="btn-login" bindtap="handleLogin">授权登录</button>
     </view>
+
     <!-- 授权登录状态 -->
     <view class="userinfo" wx:else>
       <view class="user-login-suc">
@@ -18,6 +19,34 @@
         <text class="user-login-desc">Hi {{userInfo.nickName}} ~ </text>
       </view>
       <button class="btn-login" bindtap="outLogin">退出登录</button>
+    </view>
+  </view>
+
+  <!-- 菜单列表区域 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="goToScore">
+      <text class="menu-text">每日打卡</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="">
+      <text class="menu-text">自定义词库</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToHistory">
+      <text class="menu-text">查看学习记录</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="">
+      <text class="menu-text">查看排行榜</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="">
+      <text class="menu-text">设置</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToAbout">
+      <text class="menu-text">关于</text>
+      <text class="menu-arrow">></text>
     </view>
   </view>
 </view>
