@@ -1,23 +1,43 @@
 Page({
     data: {
-      currentWord: '',        // 当前单词
-      options: [],            // 释义选项
-      correctIndex: -1,       // 正确选项索引
+      currentWord: '',
+      options: [],
+      correctIndex: -1,
       score: 0,
       correctCount: 0,
-      incorrectCount: 0
+      incorrectCount: 0,
+  
+      levelOptions: ['CET-4', 'CET-6'],
+      selectedLevel: 'cet4', // 实际传给云函数的值
+      selectedLevelName: 'CET-4'
     },
   
     onLoad: function() {
       this.loadWord()
     },
   
-    // 加载单词
+    onLevelChange: function(e) {
+      const index = e.detail.value
+      const level = index === '1' ? 'cet6' : 'cet4'
+      const name = this.data.levelOptions[index]
+  
+      this.setData({
+        selectedLevel: level,
+        selectedLevelName: name,
+        // 重置统计数据
+        score: 0,
+        correctCount: 0,
+        incorrectCount: 0
+      }, () => {
+        this.loadWord()
+      })
+    },
+  
     loadWord: function() {
       wx.cloud.callFunction({
-        name: 'getWords',    // 云函数名称
+        name: 'getWords',
         data: {
-          level: 'cet4'       // 可以动态切换为 cet6
+          level: this.data.selectedLevel
         },
         success: res => {
           const result = res.result
@@ -37,7 +57,6 @@ Page({
       })
     },
   
-    // 选择答案
     selectAnswer: function(e) {
       const selectedIndex = e.currentTarget.dataset.index
       const correctIndex = this.data.correctIndex
@@ -60,7 +79,6 @@ Page({
       }, 1000)
     },
   
-    // 保存得分
     saveScore: function() {
       const score = this.data.score
       wx.setStorageSync('userScore', score)
