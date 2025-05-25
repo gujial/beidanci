@@ -1,69 +1,69 @@
-// 学习页面逻辑
 Page({
-  data: {
-    currentWord: {},
-    options: [],
-    score: 0,
-    correctCount: 0,
-    incorrectCount: 0
-  },
-  onLoad: function() {
-    this.loadWord()
-  },
-  // 加载单词
-  loadWord: function() {
-    // 这里应该从数据库或API获取单词，这里使用模拟数据
-    const word = {
-      text: 'Example',
-      meaning: '例子'
-    }
-    const options = this.generateOptions(word)
-    this.setData({
-      currentWord: word,
-      options: options
-    })
-  },
-  // 生成选项
-  generateOptions: function(word) {
-    const correctAnswer = word.meaning
-    const options = [correctAnswer]
-    while (options.length < 4) {
-      const wrongAnswer = `错误选项${options.length}`
-      if (options.indexOf(wrongAnswer) === -1) {
-        options.push(wrongAnswer)
-      }
-    }
-    return this.shuffleArray(options)
-  },
-  // 打乱数组顺序
-  shuffleArray: function(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]
-    }
-    return array
-  },
-  // 选择答案
-  selectAnswer: function(e) {
-    const selectedAnswer = e.currentTarget.dataset.option
-    const correctAnswer = this.data.currentWord.meaning
-    if (selectedAnswer === correctAnswer) {
-      this.setData({
-        score: this.data.score + 1,
-        correctCount: this.data.correctCount + 1
-      })
-    } else {
-      this.setData({
-        incorrectCount: this.data.incorrectCount + 1
-      })
-    }
-    setTimeout(() => {
+    data: {
+      currentWord: '',        // 当前单词
+      options: [],            // 释义选项
+      correctIndex: -1,       // 正确选项索引
+      score: 0,
+      correctCount: 0,
+      incorrectCount: 0
+    },
+  
+    onLoad: function() {
       this.loadWord()
-    }, 1000)
-  },
-  // 保存得分
-  saveScore: function() {
-    const score = this.data.score
-    wx.setStorageSync('userScore', score)
-  }
-})
+    },
+  
+    // 加载单词
+    loadWord: function() {
+      wx.cloud.callFunction({
+        name: 'getWords',    // 云函数名称
+        data: {
+          level: 'cet4'       // 可以动态切换为 cet6
+        },
+        success: res => {
+          const result = res.result
+          if (result && result.word && result.choices) {
+            this.setData({
+              currentWord: result.word,
+              options: result.choices,
+              correctIndex: result.correctIndex
+            })
+          } else {
+            wx.showToast({ title: '获取单词失败', icon: 'none' })
+          }
+        },
+        fail: () => {
+          wx.showToast({ title: '云函数调用失败', icon: 'none' })
+        }
+      })
+    },
+  
+    // 选择答案
+    selectAnswer: function(e) {
+      const selectedIndex = e.currentTarget.dataset.index
+      const correctIndex = this.data.correctIndex
+  
+      if (selectedIndex === correctIndex) {
+        this.setData({
+          score: this.data.score + 1,
+          correctCount: this.data.correctCount + 1
+        })
+        wx.showToast({ title: '答对了!', icon: 'success' })
+      } else {
+        this.setData({
+          incorrectCount: this.data.incorrectCount + 1
+        })
+        wx.showToast({ title: '答错了', icon: 'none' })
+      }
+  
+      setTimeout(() => {
+        this.loadWord()
+      }, 1000)
+    },
+  
+    // 保存得分
+    saveScore: function() {
+      const score = this.data.score
+      wx.setStorageSync('userScore', score)
+    }
+  })
+  
