@@ -12,25 +12,24 @@ function shuffleArray(array) {
   return arr
 }
 
-// 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
+  const openid = wxContext.OPENID
 
-  // 从参数中获取词库类型：cet4 或 cet6
   const level = event.level
   const collectionName = level === 'cet6' ? 'beidanci_cet6' : 'beidanci_cet4'
 
   try {
-    // 获取该集合的总记录数
+    // 获取集合总数
     const countResult = await db.collection(collectionName).count()
     const total = countResult.total
 
-    // 随机选取一个作为正确词汇
+    // 获取正确单词
     const randomIndex = Math.floor(Math.random() * total)
     const correctRes = await db.collection(collectionName).skip(randomIndex).limit(1).get()
     const correct = correctRes.data[0]
 
-    // 获取三个错误释义
+    // 获取三个干扰项
     let distracts = []
     while (distracts.length < 3) {
       const idx = Math.floor(Math.random() * total)
@@ -42,22 +41,33 @@ exports.main = async (event, context) => {
       }
     }
 
-    // 构建选项并打乱顺序
     const choices = [...distracts.map(d => d.translate), correct.translate]
     const shuffledChoices = shuffleArray(choices)
     const correctIndex = shuffledChoices.indexOf(correct.translate)
 
+    // ✅ 将学习记录写入数据库
+    await db.collection('learnHistory').add({
+      data: {
+        _openid: openid,
+        word: correct.word,
+        translate: correct.translate,
+        level,
+        timestamp: db.serverDate()
+      }
+    })
+
     return {
       word: correct.word,
       choices: shuffledChoices,
-      correctIndex, // 前端可以根据这个索引判断正确答案
-      openid: wxContext.OPENID,
+      correctIndex,
+      openid
     }
+
   } catch (error) {
     console.error('云函数错误:', error)
     return {
       error: '获取单词数据失败',
-      details: error.message,
+      details: error.message
     }
   }
 }

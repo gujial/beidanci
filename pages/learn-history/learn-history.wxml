@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="search-bar">
+    <input placeholder="输入单词搜索" bindinput="onSearchInput" value="{{searchKeyword}}" />
+    <button bindtap="searchRecords">搜索</button>
+    <button bindtap="clearSearch">清除</button>
+  </view>
+
+  <view class="date-filter">
+  <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+    <view class="picker-text">开始日期：{{startDate || '请选择'}}</view>
+  </picker>
+  <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+    <view class="picker-text">结束日期：{{endDate || '请选择'}}</view>
+  </picker>
+</view>
+
+<view class="filter-bar">
+  <picker mode="selector" range="{{levels}}" value="{{levelIndex}}" bindchange="onLevelChange">
+    <view class="picker-text">词库：{{levels[levelIndex]}}</view>
+  </picker>
+</view>
+
+  <view wx:if="{{records.length === 0}}" class="empty">暂无记录</view>
+
+  <view wx:for="{{records}}" wx:key="index" class="record-item">
+    <view class="word">{{item.word}}</view>
+    <view class="translate">{{item.translate}}</view>
+    <view class="meta">
+      <text class="level">词库：{{item.level}}</text>
+      <text class="time">时间：{{item.timeStr}}</text>
+    </view>
+  </view>
+</view>

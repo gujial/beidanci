@@ -5,7 +5,8 @@
     "pages/ranking/ranking",
     "pages/me/me",
     "pages/register/register",
-    "pages/checkIn/checkIn"
+    "pages/checkIn/checkIn",
+    "pages/learn-history/learn-history"
   ],
   "window": {
     "backgroundTextStyle": "light",

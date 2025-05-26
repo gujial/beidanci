@@ -8,7 +8,7 @@
         mode="cover"
         class="user-avatar"
       />
-      <text class="user-desc">登录获取更多会员权益</text>
+      <text class="user-desc">登录使用完整功能</text>
       <button class="btn-login" bindtap="handleLogin">授权登录</button>
     </view>
 

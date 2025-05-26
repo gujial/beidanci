@@ -80,5 +80,10 @@ Page({
         wx.navigateTo({
           url: '/pages/checkIn/checkIn',
         })
+    },
+    goToHistory: function(e) {
+        wx.navigateTo({
+          url: '/pages/learn-history/learn-history',
+        })
     }
 });
