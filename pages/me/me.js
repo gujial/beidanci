@@ -27,6 +27,7 @@ Page({
                 userInfo: userInfomation,
                 hasUserInfo: true,
             });
+            console.log(userInfomation)
         } else {
             wx.showToast({
                 title: response.result.msg,
@@ -84,6 +85,11 @@ Page({
     goToHistory: function(e) {
         wx.navigateTo({
           url: '/pages/learn-history/learn-history',
+        })
+    },
+    goToStatistics: function(e) {
+        wx.navigateTo({
+          url: '/pages/learn-statistics/learn-statistics',
         })
     }
 });

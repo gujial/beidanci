@@ -6,7 +6,8 @@
     "pages/me/me",
     "pages/register/register",
     "pages/checkIn/checkIn",
-    "pages/learn-history/learn-history"
+    "pages/learn-history/learn-history",
+    "pages/learn-statistics/learn-statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",

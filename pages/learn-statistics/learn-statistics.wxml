@@ -1,0 +1,28 @@
+<view class="container">
+    <view class="chart-title">近7天学习趋势</view>
+    <ec-canvas 
+        id="lineChart" 
+        class="chart-container"
+        ec="{{ ecLine }}"
+    ></ec-canvas>
+
+    <view class="chart-title">词库分布</view>
+    <ec-canvas 
+        id="pieChart"
+        class="chart-container"
+        ec="{{ ecPie }}"
+    ></ec-canvas>
+
+    <view class="summary">
+        <view>连续打卡天数：{{stats.streak}} 天</view>
+        <view>总得分：{{stats.totalScore}}</view>
+        <view>答题次数：{{stats.totalTests}}</view>
+    </view>
+
+    <view class="daily-list">
+        <view class="daily-item" wx:for="{{stats.dailyCounts}}" wx:key="index">
+            <view>{{item._id}}</view>
+            <view>学习单词：{{item.count}} 个</view>
+        </view>
+    </view>
+</view>
