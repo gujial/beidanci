@@ -7,7 +7,8 @@
     "pages/register/register",
     "pages/checkIn/checkIn",
     "pages/learn-history/learn-history",
-    "pages/learn-statistics/learn-statistics"
+    "pages/learn-statistics/learn-statistics",
+    "pages/settings/settings"
   ],
   "window": {
     "backgroundTextStyle": "light",

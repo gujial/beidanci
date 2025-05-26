@@ -36,7 +36,7 @@
             <text class="menu-text">查看排行榜</text>
             <text class="menu-arrow">></text>
         </view>
-        <view class="menu-item" bindtap="">
+        <view class="menu-item" bindtap="goToSettings">
             <text class="menu-text">设置</text>
             <text class="menu-arrow">></text>
         </view>

@@ -1,0 +1,27 @@
+.container {
+    padding: 20rpx;
+}
+
+.section {
+    margin-bottom: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.label {
+    font-size: 32rpx;
+    margin-bottom: 10rpx;
+    display: block;
+}
+
+.picker {
+    padding: 20rpx;
+    background: #f1f1f1;
+    border-radius: 10rpx;
+}
+
+.danger button {
+    margin-top: 20rpx;
+}

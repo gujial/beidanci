@@ -96,5 +96,10 @@ Page({
         wx.navigateTo({
           url: '/pages/ranking/ranking',
         })
+    },
+    goToSettings: function(e) {
+        wx.navigateTo({
+          url: '/pages/settings/settings',
+        })
     }
 });
