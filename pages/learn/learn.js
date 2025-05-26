@@ -14,6 +14,25 @@ Page({
   
     onLoad: function() {
       this.loadWord()
+
+      wx.cloud.callFunction({
+        name: 'checkIn',
+        success: res => {
+          if (res.result.success) {
+            if (!res.result.checkedIn) {
+              console.log('今日打卡成功，连续天数：', res.result.streak)
+            } else {
+              console.log('今日已打卡，连续天数：', res.result.streak)
+            }
+            this.setData({
+              streakDays: res.result.streak
+            })
+          }
+        },
+        fail: err => {
+          console.error('打卡失败', err)
+        }
+      })
     },
   
     onLevelChange: function(e) {

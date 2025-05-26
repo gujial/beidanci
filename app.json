@@ -4,7 +4,8 @@
     "pages/learn/learn",
     "pages/ranking/ranking",
     "pages/me/me",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/checkIn/checkIn"
   ],
   "window": {
     "backgroundTextStyle": "light",

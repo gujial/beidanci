@@ -1,0 +1,13 @@
+.checkin-history {
+    margin: 20rpx;
+  }
+  .history-item {
+    padding: 16rpx;
+    border-bottom: 1px solid #eee;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 32rpx;
+    margin-bottom: 10rpx;
+  }
+  

@@ -75,4 +75,10 @@ Page({
             });
         }
     },
+
+    goToCheckIn: function(e) {
+        wx.navigateTo({
+          url: '/pages/checkIn/checkIn',
+        })
+    }
 });
