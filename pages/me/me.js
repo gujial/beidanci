@@ -101,5 +101,10 @@ Page({
         wx.navigateTo({
           url: '/pages/settings/settings',
         })
+    },
+    goToAbout: function(e) {
+        wx.navigateTo({
+          url: '/pages/about/about',
+        })
     }
 });
