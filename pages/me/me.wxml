@@ -32,7 +32,7 @@
             <text class="menu-text">查看学习统计</text>
             <text class="menu-arrow">></text>
         </view>
-        <view class="menu-item" bindtap="">
+        <view class="menu-item" bindtap="goToRanking">
             <text class="menu-text">查看排行榜</text>
             <text class="menu-arrow">></text>
         </view>

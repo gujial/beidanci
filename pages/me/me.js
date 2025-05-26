@@ -91,5 +91,10 @@ Page({
         wx.navigateTo({
           url: '/pages/learn-statistics/learn-statistics',
         })
+    },
+    goToRanking: function(e) {
+        wx.navigateTo({
+          url: '/pages/ranking/ranking',
+        })
     }
 });

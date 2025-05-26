@@ -1,30 +1,74 @@
-.container {
-  padding: 20px;
-}
-.title {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 10px;
-}
-.subtitle {
-  font-size: 14px;
-  color: #666666;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.user-rank {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.rankings {
-  margin-bottom: 20px;
-}
-.ranking-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #eeeeee;
-}
-button {
-  width: 80%;
-}
+.ranking-page {
+    padding: 20rpx;
+  }
+  
+  .top3-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30rpx;
+  }
+  
+  .top3-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10rpx;
+    border-radius: 16rpx;
+    background: #fdf6ec;
+    width: 30%;
+  }
+  
+  .avatar {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    margin-bottom: 10rpx;
+  }
+  
+  .nickname {
+    font-size: 28rpx;
+    margin: 5rpx 0;
+  }
+  
+  .score {
+    color: #fa541c;
+    font-weight: bold;
+  }
+  
+  .rank-tag {
+    background-color: gold;
+    padding: 2rpx 8rpx;
+    border-radius: 12rpx;
+    font-size: 20rpx;
+    margin-top: 5rpx;
+  }
+  
+  .list-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    margin: 20rpx 0;
+  }
+  
+  .rank-list {
+    margin-bottom: 40rpx;
+  }
+  
+  .rank-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16rpx;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .rank-number {
+    width: 60rpx;
+    color: #999;
+  }
+  
+  .self-info {
+    text-align: center;
+    font-size: 28rpx;
+    color: #333;
+    margin-top: 40rpx;
+  }
+  
