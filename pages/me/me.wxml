@@ -3,7 +3,7 @@
     <view class="users">
         <!-- 未授权登录状态 -->
         <view class="userinfo" wx:if="{{!userInfo}}">
-            <image src="https://www.arryblog.com/coffee/default-avatar.png" mode="cover" class="user-avatar" />
+            <image src="/images/default-avatar.png" mode="cover" class="user-avatar" />
             <text class="user-desc">登录使用完整功能</text>
             <button class="btn-login" bindtap="handleLogin">授权登录</button>
         </view>
