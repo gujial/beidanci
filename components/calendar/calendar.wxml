@@ -1,0 +1,10 @@
+<view class="calendar">
+  <view class="weekdays">
+    <text>日</text><text>一</text><text>二</text><text>三</text><text>四</text><text>五</text><text>六</text>
+  </view>
+  <view class="days">
+    <view wx:for="{{days}}" wx:key="index" class="day-box {{item.checked ? 'checked' : ''}}">
+      <text>{{item.day}}</text>
+    </view>
+  </view>
+</view>

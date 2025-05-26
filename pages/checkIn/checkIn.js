@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    checkInHistory: []
+    checkInHistory: [],
+    checkedDates: []
   },
 
   /**
@@ -27,7 +28,16 @@ Page({
           wx.showToast({ title: '云函数调用失败', icon: 'none' })
         }
       })
-      
+      wx.cloud.callFunction({
+        name: 'getMonthlyCheckIn',
+        success: res => {
+          if (res.result.success) {
+            this.setData({
+              checkedDates: res.result.data
+            })
+          }
+        }
+      })
   },
 
   /**
