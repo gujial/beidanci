@@ -1,0 +1,17 @@
+<view class="container">
+  <!-- 文本输入区域 -->
+  <view class="text-area-container">
+    <textarea 
+      class="text-input" 
+      placeholder="请粘贴文本，每行一个单词和释义，用空格或Tab分隔。例如： apple 苹果 banana 香蕉" 
+      bindinput="onTextInput"
+      value="{{inputText}}"
+      maxlength="-1"
+    ></textarea>
+  </view>
+  
+  <!-- 识别按钮 -->
+  <view class="button-container">
+    <button class="recognize-button" bindtap="recognizeWords">识别</button>
+  </view>
+</view> 

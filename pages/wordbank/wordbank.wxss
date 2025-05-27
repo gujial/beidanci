@@ -1,0 +1,103 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  padding-left: 10rpx;
+}
+
+.wordbank-list {
+  width: 100%;
+}
+
+.wordbank-item {
+  background-color: #cccccc;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.add-button {
+  background-color: #cccccc;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  font-size: 48rpx;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  margin-top: 100rpx;
+  font-size: 28rpx;
+}
+
+/* 弹窗样式 */
+.dialog-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.dialog-container {
+  width: 80%;
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 40rpx 30rpx;
+}
+
+.dialog-title {
+  font-size: 32rpx;
+  text-align: center;
+  margin-bottom: 30rpx;
+  font-weight: bold;
+}
+
+.dialog-input {
+  border: 1rpx solid #ddd;
+  padding: 20rpx;
+  border-radius: 6rpx;
+  margin-bottom: 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-button {
+  flex: 1;
+  margin: 0 10rpx;
+  font-size: 28rpx;
+  padding: 16rpx 0;
+}
+
+.cancel {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.confirm {
+  background-color: #07c160;
+  color: white;
+} 

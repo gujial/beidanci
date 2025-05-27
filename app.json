@@ -8,7 +8,10 @@
     "pages/checkIn/checkIn",
     "pages/learn-history/learn-history",
     "pages/learn-statistics/learn-statistics",
-    "pages/settings/settings"
+    "pages/settings/settings",
+    "pages/wordbank/wordbank",
+    "pages/wordbank-add/wordbank-add",
+    "pages/wordbank-detail/wordbank-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

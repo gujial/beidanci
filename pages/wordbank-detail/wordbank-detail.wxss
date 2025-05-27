@@ -1,0 +1,81 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 10rpx;
+  background-color: #cccccc;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-button {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.word-list {
+  width: 100%;
+}
+
+.word-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #fff;
+  margin-bottom: 10rpx;
+  border-radius: 6rpx;
+}
+
+.word-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.word {
+  font-size: 32rpx;
+  margin-bottom: 6rpx;
+}
+
+.translate {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.delete-button {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-icon {
+  font-size: 40rpx;
+  color: #ff4d4f;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  padding: 100rpx 0;
+} 

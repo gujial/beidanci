@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "词库详情",
+  "usingComponents": {},
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50
+} 
