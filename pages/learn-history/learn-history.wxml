@@ -26,7 +26,7 @@
     <view class="word">{{item.word}}</view>
     <view class="translate">{{item.translate}}</view>
     <view class="meta">
-      <text class="level">词库：{{item.level}}</text>
+      <text class="level">词库：{{item.levelName}}</text>
       <text class="time">时间：{{item.timeStr}}</text>
     </view>
   </view>
