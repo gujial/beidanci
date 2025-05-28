@@ -17,6 +17,9 @@
           <text class="delete-icon">×</text>
         </view>
       </view>
+      <!-- 加载提示 -->
+      <view class="loading-tip" wx:if="{{loading}}">加载中...</view>
+      <view class="loading-tip" wx:elif="{{!hasMore}}">没有更多单词了</view>
     </block>
     <view wx:else class="empty-tip">暂无单词</view>
   </view>

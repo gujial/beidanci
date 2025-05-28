@@ -15,32 +15,38 @@ Page({
 
   // 获取用户词库列表
   fetchWordbanks: function() {
-    const db = wx.cloud.database();
-    const _ = db.command;
-    
     wx.showLoading({
       title: '加载中',
     });
     
-    db.collection('wordbanks')
-      .where({
-        _openid: '{openid}' // 自动替换为当前用户openid
-      })
-      .get()
-      .then(res => {
+    wx.cloud.callFunction({
+      name: 'wordbank',
+      data: {
+        action: 'getWordbanks'
+      }
+    })
+    .then(res => {
+      const result = res.result;
+      if (result.success) {
         this.setData({
-          wordbanks: res.data
+          wordbanks: result.data
         });
-        wx.hideLoading();
-      })
-      .catch(err => {
-        console.error('获取词库失败', err);
-        wx.hideLoading();
+      } else {
         wx.showToast({
-          title: '获取词库失败',
+          title: result.message || '获取词库失败',
           icon: 'none'
         });
+      }
+      wx.hideLoading();
+    })
+    .catch(err => {
+      console.error('调用云函数失败', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '获取词库失败',
+        icon: 'none'
       });
+    });
   },
 
   // 显示添加词库对话框
@@ -86,56 +92,59 @@ Page({
       title: '创建中',
     });
     
-    const db = wx.cloud.database();
-    
-    // 检查是否已存在同名词库
-    db.collection('wordbanks')
-      .where({
-        _openid: '{openid}',
-        name: name
-      })
-      .count()
-      .then(res => {
-        if (res.total > 0) {
-          wx.hideLoading();
-          wx.showToast({
-            title: '已存在同名词库',
-            icon: 'none'
-          });
-          return;
+    wx.cloud.callFunction({
+      name: 'wordbank',
+      data: {
+        action: 'createWordbank',
+        data: {
+          name: name
+        }
+      }
+    })
+    .then(res => {
+      wx.hideLoading();
+      
+      const result = res.result;
+      if (result && result.success) {
+        this.hideDialog();
+        
+        // 跳转到添加词汇页面
+        wx.navigateTo({
+          url: `/pages/wordbank-add/wordbank-add?id=${result.data._id}&name=${result.data.name}`
+        });
+        
+        // 刷新词库列表
+        this.fetchWordbanks();
+      } else {
+        let errorMsg = '创建失败';
+        if (result && result.message) {
+          errorMsg = result.message;
+        } else if (res.errMsg) {
+          errorMsg = res.errMsg;
         }
         
-        // 创建新词库
-        return db.collection('wordbanks').add({
-          data: {
-            name: name,
-            createTime: db.serverDate(),
-            wordCount: 0
-          }
-        });
-      })
-      .then(res => {
-        if (res && res._id) {
-          wx.hideLoading();
-          this.hideDialog();
-          
-          // 跳转到添加词汇页面
-          wx.navigateTo({
-            url: `/pages/wordbank-add/wordbank-add?id=${res._id}&name=${name}`
-          });
-          
-          // 刷新词库列表
-          this.fetchWordbanks();
-        }
-      })
-      .catch(err => {
-        console.error('创建词库失败', err);
-        wx.hideLoading();
         wx.showToast({
-          title: '创建失败',
-          icon: 'none'
+          title: errorMsg,
+          icon: 'none',
+          duration: 2000
         });
+      }
+    })
+    .catch(err => {
+      wx.hideLoading();
+      
+      let errorMsg = '创建词库失败';
+      
+      if (err.errMsg) {
+        errorMsg += ': ' + err.errMsg;
+      }
+      
+      wx.showToast({
+        title: errorMsg,
+        icon: 'none',
+        duration: 3000
       });
+    });
   },
 
   // 跳转到词库详情

@@ -2,7 +2,8 @@ Page({
   data: {
     inputText: '',
     wordbankId: '',
-    wordbankName: ''
+    wordbankName: '',
+    textareaFocus: true
   },
 
   onLoad: function(options) {
@@ -10,6 +11,11 @@ Page({
       this.setData({
         wordbankId: options.id,
         wordbankName: options.name
+      });
+
+      // 设置导航栏标题为词库名称
+      wx.setNavigationBarTitle({
+        title: `添加单词 - ${options.name}`
       });
     } else {
       wx.showToast({
@@ -26,6 +32,13 @@ Page({
   onTextInput: function(e) {
     this.setData({
       inputText: e.detail.value
+    });
+  },
+
+  // 设置输入框焦点
+  setTextareaFocus: function() {
+    this.setData({
+      textareaFocus: true
     });
   },
 
@@ -56,19 +69,23 @@ Page({
       title: '添加中...',
     });
     
-    // 创建集合名称（使用词库ID作为集合名）
-    const collectionName = `wordbank_${this.data.wordbankId}`;
-    
-    // 添加单词到数据库
-    this.addWordsToDatabase(words, collectionName)
-      .then(() => {
-        // 更新词库的单词数量
-        return this.updateWordbankCount(words.length);
-      })
-      .then(() => {
+    // 调用云函数添加单词
+    wx.cloud.callFunction({
+      name: 'wordbank',
+      data: {
+        action: 'addWords',
+        data: {
+          wordbankId: this.data.wordbankId,
+          words: words
+        }
+      }
+    })
+    .then(res => {
+      const result = res.result;
+      if (result.success) {
         wx.hideLoading();
         wx.showToast({
-          title: `成功添加${words.length}个单词`,
+          title: `成功添加${result.count}个单词`,
           icon: 'success'
         });
         
@@ -81,15 +98,22 @@ Page({
         setTimeout(() => {
           wx.navigateBack();
         }, 1500);
-      })
-      .catch(err => {
-        console.error('添加单词失败', err);
+      } else {
         wx.hideLoading();
         wx.showToast({
-          title: '添加失败',
+          title: result.message || '添加失败',
           icon: 'none'
         });
+      }
+    })
+    .catch(err => {
+      console.error('调用云函数失败', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '添加失败',
+        icon: 'none'
       });
+    });
   },
 
   // 解析文本，提取单词和释义
@@ -98,10 +122,14 @@ Page({
     const words = [];
     
     const englishWordRegex = /^[a-zA-Z]+$/;
+    let validCount = 0;
+    let totalCount = 0;
     
     for (let line of lines) {
       // 跳过空行
       if (!line.trim()) continue;
+      
+      totalCount++;
       
       // 尝试按空格或Tab分割
       let parts = line.trim().split(/\s+|\t+/);
@@ -113,56 +141,30 @@ Page({
         // 检查单词是否为纯英文
         if (!englishWordRegex.test(word)) continue;
         
-        // 释义为剩余部分
-        const translate = parts.slice(1).join(' ').trim();
+        // 释义为第二部分，不允许内部有空格
+        const translate = parts[1].trim();
         
-        // 如果释义中包含空格，则不符合要求
-        if (translate.includes(' ')) continue;
+        // 如果单词或释义为空，则跳过
+        if (!word || !translate) continue;
         
         words.push({
           word,
           translate
         });
+        
+        validCount++;
       }
     }
     
-    return words;
-  },
-
-  // 添加单词到数据库
-  addWordsToDatabase: function(words, collectionName) {
-    const db = wx.cloud.database();
-    
-    // 检查集合是否存在，不存在则创建
-    return new Promise((resolve, reject) => {
-      const addPromises = words.map(wordObj => {
-        return db.collection(collectionName).add({
-          data: {
-            word: wordObj.word,
-            translate: wordObj.translate,
-            createTime: db.serverDate()
-          }
-        });
+    // 如果有解析失败的行，给出提示
+    if (totalCount > 0 && validCount < totalCount) {
+      wx.showToast({
+        title: `已解析 ${validCount}/${totalCount} 行`,
+        icon: 'none',
+        duration: 2000
       });
-      
-      Promise.all(addPromises)
-        .then(() => {
-          resolve();
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  },
-
-  // 更新词库的单词数量
-  updateWordbankCount: function(addedCount) {
-    const db = wx.cloud.database();
+    }
     
-    return db.collection('wordbanks').doc(this.data.wordbankId).update({
-      data: {
-        wordCount: db.command.inc(addedCount)
-      }
-    });
+    return words;
   }
 }); 

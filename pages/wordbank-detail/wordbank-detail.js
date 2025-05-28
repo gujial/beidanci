@@ -5,7 +5,8 @@ Page({
     words: [],
     page: 1,
     pageSize: 20,
-    hasMore: true
+    hasMore: true,
+    loading: false
   },
 
   onLoad: function(options) {
@@ -40,40 +41,53 @@ Page({
 
   // 加载单词列表
   loadWords: function() {
-    if (!this.data.hasMore) return;
+    if (!this.data.hasMore || this.data.loading) return;
     
-    const db = wx.cloud.database();
-    const collectionName = `wordbank_${this.data.wordbankId}`;
-    const skip = (this.data.page - 1) * this.data.pageSize;
+    this.setData({ loading: true });
     
     wx.showLoading({
       title: '加载中',
     });
     
-    db.collection(collectionName)
-      .skip(skip)
-      .limit(this.data.pageSize)
-      .orderBy('createTime', 'desc')
-      .get()
-      .then(res => {
-        const newWords = res.data;
+    wx.cloud.callFunction({
+      name: 'wordbank',
+      data: {
+        action: 'getWords',
+        data: {
+          wordbankId: this.data.wordbankId,
+          page: this.data.page,
+          pageSize: this.data.pageSize
+        }
+      }
+    })
+    .then(res => {
+      const result = res.result;
+      if (result.success) {
+        const newWords = result.data;
         
         this.setData({
           words: this.data.words.concat(newWords),
           page: this.data.page + 1,
-          hasMore: newWords.length === this.data.pageSize
+          hasMore: result.hasMore
         });
-        
-        wx.hideLoading();
-      })
-      .catch(err => {
-        console.error('获取单词失败', err);
-        wx.hideLoading();
+      } else {
         wx.showToast({
-          title: '获取单词失败',
+          title: result.message || '获取单词失败',
           icon: 'none'
         });
+      }
+      wx.hideLoading();
+      this.setData({ loading: false });
+    })
+    .catch(err => {
+      console.error('调用云函数失败', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '获取单词失败',
+        icon: 'none'
       });
+      this.setData({ loading: false });
+    });
   },
 
   // 跳转到添加单词页面
@@ -100,17 +114,23 @@ Page({
 
   // 执行删除操作
   performDelete: function(id, index) {
-    const db = wx.cloud.database();
-    const collectionName = `wordbank_${this.data.wordbankId}`;
-    
     wx.showLoading({
       title: '删除中',
     });
     
-    db.collection(collectionName)
-      .doc(id)
-      .remove()
-      .then(() => {
+    wx.cloud.callFunction({
+      name: 'wordbank',
+      data: {
+        action: 'deleteWord',
+        data: {
+          wordbankId: this.data.wordbankId,
+          wordId: id
+        }
+      }
+    })
+    .then(res => {
+      const result = res.result;
+      if (result.success) {
         // 更新本地数据
         const words = this.data.words.slice();
         words.splice(index, 1);
@@ -119,28 +139,26 @@ Page({
           words
         });
         
-        // 更新词库单词数量
-        return db.collection('wordbanks').doc(this.data.wordbankId).update({
-          data: {
-            wordCount: db.command.inc(-1)
-          }
-        });
-      })
-      .then(() => {
-        wx.hideLoading();
         wx.showToast({
           title: '删除成功',
           icon: 'success'
         });
-      })
-      .catch(err => {
-        console.error('删除单词失败', err);
-        wx.hideLoading();
+      } else {
         wx.showToast({
-          title: '删除失败',
+          title: result.message || '删除失败',
           icon: 'none'
         });
+      }
+      wx.hideLoading();
+    })
+    .catch(err => {
+      console.error('调用云函数失败', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '删除失败',
+        icon: 'none'
       });
+    });
   },
 
   // 触底加载更多
@@ -148,5 +166,16 @@ Page({
     if (this.data.hasMore) {
       this.loadWords();
     }
+  },
+
+  // 下拉刷新
+  onPullDownRefresh: function() {
+    this.setData({
+      page: 1,
+      words: [],
+      hasMore: true
+    });
+    this.loadWords();
+    wx.stopPullDownRefresh();
   }
 }); 

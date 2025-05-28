@@ -12,7 +12,6 @@
     <view class="score-section">
         <text>得分：{{score}} | </text>
         <text>正确：{{correctCount}} | 错误：{{incorrectCount}}</text>
-        <text> | 答案：{{correctIndex}}</text>
     </view>
 
     <view class="picker-section">
@@ -21,5 +20,20 @@
                 当前词库：{{selectedLevelName}}
             </view>
         </picker>
+    </view>
+
+    <!-- 用户词库选择器 -->
+    <view class="user-bank-picker" wx:if="{{showUserBankPicker}}">
+        <view class="picker-header">
+            <text>请选择要学习的词库</text>
+        </view>
+        <picker mode="selector" range="{{userBanks}}" range-key="name" bindchange="onUserBankChange">
+            <view class="picker-display">
+                选择词库
+            </view>
+        </picker>
+        <view class="manage-btn">
+            <button size="mini" type="primary" bindtap="goToWordbank">管理我的词库</button>
+        </view>
     </view>
 </view>
