@@ -1,18 +1,15 @@
-// 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }) // 使用当前云环境
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 
-// 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const { avatarUrl, nickName } = event;
   const db = cloud.database();
   const users = db.collection("users");
 
-  // 检查是否已注册
   const { data } = await users.where({
-    _openId: wxContext.OPENID,
+    _openid: wxContext.OPENID,
   }).get();
 
   if (data.length > 0) {
@@ -23,11 +20,10 @@ exports.main = async (event, context) => {
     };
   }
 
-  // 新增用户
   await users.add({
     data: {
-      _openId: wxContext.OPENID,
-      avatarUrl,
+      _openid: wxContext.OPENID,
+      avatarUrl, // 这是 fileID
       nickName,
       createTime: new Date()
     }
@@ -37,7 +33,7 @@ exports.main = async (event, context) => {
     code: 0,
     msg: "注册成功",
     data: {
-      _openId: wxContext.OPENID,
+      _openid: wxContext.OPENID,
       avatarUrl,
       nickName
     }

@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
       .lookup({
         from: 'users',
         localField: '_id',
-        foreignField: '_openId',
+        foreignField: '_openid',
         as: 'userInfo'
       })
       .sort({ totalScore: -1 })

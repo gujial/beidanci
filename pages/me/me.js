@@ -35,7 +35,7 @@ Page({
                 duration: 2000,
             });
             wx.navigateTo({
-              url: '/pages/register/register',
+                url: '/pages/register/register',
             })
         }
     },
@@ -55,16 +55,28 @@ Page({
         // 获取本地缓存中的用户登录信息
         const userInfo = await wx.getStorageSync("userInfo");
         if (userInfo) {
+            const tempRes = await wx.cloud.getTempFileURL({
+                fileList: [userInfo.avatarUrl],
+            });
+
+            userInfo.avatarUrl = tempRes.fileList[0].tempFileURL;
+
             this.setData({
                 userInfo,
             });
         }
     },
 
-    onShow() {
+    async onShow() {
         // 每次页面显示时检查本地缓存
-        const userInfo = wx.getStorageSync("userInfo");
+        const userInfo = await wx.getStorageSync("userInfo");
         if (userInfo) {
+            const tempRes = await wx.cloud.getTempFileURL({
+                fileList: [userInfo.avatarUrl],
+            });
+
+            userInfo.avatarUrl = tempRes.fileList[0].tempFileURL;
+
             this.setData({
                 userInfo,
                 hasUserInfo: true,
@@ -77,34 +89,34 @@ Page({
         }
     },
 
-    goToCheckIn: function(e) {
+    goToCheckIn: function (e) {
         wx.navigateTo({
-          url: '/pages/checkIn/checkIn',
+            url: '/pages/checkIn/checkIn',
         })
     },
-    goToHistory: function(e) {
+    goToHistory: function (e) {
         wx.navigateTo({
-          url: '/pages/learn-history/learn-history',
+            url: '/pages/learn-history/learn-history',
         })
     },
-    goToStatistics: function(e) {
+    goToStatistics: function (e) {
         wx.navigateTo({
-          url: '/pages/learn-statistics/learn-statistics',
+            url: '/pages/learn-statistics/learn-statistics',
         })
     },
-    goToRanking: function(e) {
+    goToRanking: function (e) {
         wx.navigateTo({
-          url: '/pages/ranking/ranking',
+            url: '/pages/ranking/ranking',
         })
     },
-    goToSettings: function(e) {
+    goToSettings: function (e) {
         wx.navigateTo({
-          url: '/pages/settings/settings',
+            url: '/pages/settings/settings',
         })
     },
-    goToAbout: function(e) {
+    goToAbout: function (e) {
         wx.navigateTo({
-          url: '/pages/about/about',
+            url: '/pages/about/about',
         })
     }
 });
