@@ -1,0 +1,26 @@
+<view class="container">
+  <image class="avatar" src="/assets/logo.png" mode="aspectFit" />
+
+  <view class="title">背单词小程序</view>
+  <view class="subtitle">一个帮助你高效记单词的小程序</view>
+
+  <view class="section">
+    <text class="section-title">作者信息</text>
+    <text>古佳乐 8008123201 软件工程2305班</text>
+    <text>GitHub：github.com/gujial</text>
+  </view>
+
+  <view class="section">
+    <text class="section-title">功能简介</text>
+    <text>✔ CET-4 / CET-6 单词选择</text>
+    <text>✔ 每日打卡统计</text>
+    <text>✔ 学习数据图表展示</text>
+    <text>✔ 单词历史记录</text>
+    <text>✔ 排行榜系统</text>
+  </view>
+
+  <view class="section">
+    <text class="section-title">致谢</text>
+    <text>感谢所有支持和使用本小程序的朋友！</text>
+  </view>
+</view>

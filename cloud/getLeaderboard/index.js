@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
       })
       .lookup({
         from: 'users',
-        localField: '_openid',
+        localField: '_id',
         foreignField: '_openid',
         as: 'userInfo'
       })
