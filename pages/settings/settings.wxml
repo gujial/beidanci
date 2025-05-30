@@ -7,6 +7,13 @@
   </view>
 
   <view class="section">
+    <text class="label">每组学习单词量</text>
+    <picker mode="selector" range="{{wordCountOptions}}" value="{{wordCountIndex}}" bindchange="onWordCountChange">
+      <view class="picker">{{ selectedWordCount }}</view>
+    </picker>
+</view>
+
+  <view class="section">
     <text class="label">答题音效</text>
     <switch checked="{{enableSound}}" bindchange="onToggleSound" />
   </view>
