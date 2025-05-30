@@ -2,5 +2,6 @@
   <text class="welcome">{{welcomeText}}</text>
   <text class="welcome">好好学习，天天向上</text>
   <button bindtap="goToLearn">开始今日学习</button>
+  <button bindtap="goToReview">开始今日复习</button>
   <text class="intro">{{intro}}</text>
 </view>
