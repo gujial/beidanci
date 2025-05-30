@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="title">我的词库</view>
+  
+  <!-- 词库列表 -->
+  <view class="wordbank-list">
+    <block wx:if="{{wordbanks.length > 0}}">
+      <view 
+        wx:for="{{wordbanks}}" 
+        wx:key="index" 
+        class="wordbank-item" 
+        bindtap="goToDetail" 
+        data-id="{{item._id}}"
+        data-name="{{item.name}}">
+        {{item.name}}
+      </view>
+      <!-- 添加按钮在词库列表底部 -->
+      <view class="add-button" bindtap="showAddDialog">+</view>
+    </block>
+    <block wx:else>
+      <!-- 无词库时添加按钮在顶部 -->
+      <view class="add-button" bindtap="showAddDialog">+</view>
+      <view class="empty-tip">暂无个人词库</view>
+    </block>
+  </view>
+  
+  <!-- 添加词库弹窗 -->
+  <view class="dialog-mask" wx:if="{{showDialog}}" bindtap="hideDialog">
+    <view class="dialog-container" catchtap="stopPropagation">
+      <view class="dialog-title">新建词库</view>
+      <input class="dialog-input" placeholder="请输入词库名称" bindinput="onNameInput" value="{{newBankName}}"/>
+      <view class="dialog-buttons">
+        <button class="dialog-button cancel" bindtap="hideDialog">取消</button>
+        <button class="dialog-button confirm" bindtap="createWordbank">确定</button>
+      </view>
+    </view>
+  </view>
+</view> 

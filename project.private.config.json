@@ -19,5 +19,32 @@
     "checkInvalidKey": true,
     "ignoreDevUnusedFiles": true
   },
-  "libVersion": "3.8.4"
+  "libVersion": "3.5.5",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/wordbank/wordbank",
+          "pathName": "pages/wordbank/wordbank",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/ranking/ranking",
+          "pathName": "pages/ranking/ranking",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/learn/learn",
+          "pathName": "pages/learn/learn",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

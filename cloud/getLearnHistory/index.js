@@ -49,10 +49,50 @@ exports.main = async (event, context) => {
             .skip(skip)
             .limit(limit)
             .get()
+            
+        // 处理用户自定义词库名称
+        const userBankIds = [];
+        historyRes.data.forEach(item => {
+            if (item.level && item.level.startsWith('user_')) {
+                const bankId = item.level.substring(5); // 移除'user_'前缀
+                userBankIds.push(bankId);
+            }
+        });
+        
+        // 如果有用户词库记录，查询词库名称
+        const userWordbanks = {};
+        if (userBankIds.length > 0) {
+            const wordbanksRes = await db.collection('wordbanks')
+                .where({
+                    _id: db.command.in([...new Set(userBankIds)])  // 去重
+                })
+                .get();
+            
+            // 创建ID到名称的映射
+            wordbanksRes.data.forEach(bank => {
+                userWordbanks[bank._id] = bank.name;
+            });
+        }
+        
+        // 处理查询结果，添加词库名称字段
+        const processedData = historyRes.data.map(item => {
+            const result = { ...item };
+            if (item.level && item.level.startsWith('user_')) {
+                const bankId = item.level.substring(5);
+                result.levelName = userWordbanks[bankId] || `未知词库(${bankId})`;
+            } else if (item.level === 'cet4') {
+                result.levelName = 'CET-4';
+            } else if (item.level === 'cet6') {
+                result.levelName = 'CET-6';
+            } else {
+                result.levelName = item.level;
+            }
+            return result;
+        });
 
         return {
             success: true,
-            data: historyRes.data
+            data: processedData
         }
 
     } catch (err) {

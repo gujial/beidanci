@@ -99,6 +99,11 @@ Page({
             url: '/pages/learn-history/learn-history',
         })
     },
+    goToWordbank: function(e) {
+        wx.navigateTo({
+          url: '/pages/wordbank/wordbank',
+        })
+    },
     goToStatistics: function (e) {
         wx.navigateTo({
             url: '/pages/learn-statistics/learn-statistics',
@@ -118,5 +123,12 @@ Page({
         wx.navigateTo({
             url: '/pages/about/about',
         })
+    },
+    goToAbout: function(e) {
+        wx.showModal({
+            title: '关于',
+            content: '单词背诵小程序 v1.0.0',
+            showCancel: false
+        });
     }
 });

@@ -60,9 +60,43 @@ exports.main = async (event, context) => {
 
         // 转换为对象格式：{ cet4: 50, cet6: 30 }
         const byLevel = {}
+        
+        // 获取用户词库映射表
+        const userWordbanks = {}
+        const userBankIds = []
+        
+        // 提取所有用户词库ID
+        byLevelAgg.list.forEach(item => {
+            if (item._id && item._id.startsWith('user_')) {
+                const bankId = item._id.substring(5) // 移除'user_'前缀
+                userBankIds.push(bankId)
+            }
+        })
+        
+        // 如果有用户词库，查询词库名称
+        if (userBankIds.length > 0) {
+            const wordbanksRes = await db.collection('wordbanks')
+                .where({
+                    _id: db.command.in(userBankIds)
+                })
+                .get()
+            
+            // 创建ID到名称的映射
+            wordbanksRes.data.forEach(bank => {
+                userWordbanks[bank._id] = bank.name
+            })
+        }
+        
+        // 处理统计数据，将用户词库ID转换为名称
         byLevelAgg.list.forEach(item => {
             if (item._id) {
-                byLevel[item._id] = item.count
+                if (item._id.startsWith('user_')) {
+                    const bankId = item._id.substring(5)
+                    const bankName = userWordbanks[bankId] || `未知词库(${bankId})`
+                    byLevel[bankName] = item.count
+                } else {
+                    byLevel[item._id] = item.count
+                }
             }
         })
 

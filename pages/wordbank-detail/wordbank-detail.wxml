@@ -1,0 +1,26 @@
+<view class="container">
+  <!-- 词库名称 -->
+  <view class="header">
+    <view class="title">{{wordbankName}}</view>
+    <view class="add-button" bindtap="goToAdd">+</view>
+  </view>
+  
+  <!-- 单词列表 -->
+  <view class="word-list">
+    <block wx:if="{{words.length > 0}}">
+      <view wx:for="{{words}}" wx:key="index" class="word-item">
+        <view class="word-content">
+          <text class="word">{{item.word}}</text>
+          <text class="translate">{{item.translate}}</text>
+        </view>
+        <view class="delete-button" bindtap="deleteWord" data-id="{{item._id}}" data-index="{{index}}">
+          <text class="delete-icon">×</text>
+        </view>
+      </view>
+      <!-- 加载提示 -->
+      <view class="loading-tip" wx:if="{{loading}}">加载中...</view>
+      <view class="loading-tip" wx:elif="{{!hasMore}}">没有更多单词了</view>
+    </block>
+    <view wx:else class="empty-tip">暂无单词</view>
+  </view>
+</view> 

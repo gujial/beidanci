@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 标题 -->
+  <view class="page-title">添加单词</view>
+
+  <!-- 输入说明 -->
+  <view class="input-guide">
+    请粘贴文本，每行一个单词和一个中文释义，用空格或Tab分隔
+  </view>
+
+  <!-- 示例 -->
+  <view class="example">
+    示例：apple 苹果
+  </view>
+
+  <!-- 文本输入区域 -->
+  <view class="text-area-container" bindtap="setTextareaFocus">
+    <textarea 
+      class="text-input" 
+      placeholder="请在此输入或粘贴文本" 
+      bindinput="onTextInput"
+      value="{{inputText}}"
+      maxlength="-1"
+      auto-height="{{false}}"
+      show-confirm-bar="{{false}}"
+      cursor-spacing="100"
+      focus="{{textareaFocus}}"
+    ></textarea>
+  </view>
+  
+  <!-- 识别按钮 -->
+  <view class="button-container">
+    <button class="recognize-button" bindtap="recognizeWords">识别</button>
+  </view>
+</view> 
