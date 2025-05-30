@@ -24,7 +24,7 @@ Page({
         if (savedLevel && savedLevelName) {
             this.setData({
                 selectedLevel: savedLevel,
-                selectedLevelName: savedLevelName,
+                selectedLevelName: savedLevelName, 
                 selectedWordCount: savedWordCount
             })
         }

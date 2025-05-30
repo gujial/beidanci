@@ -55,7 +55,18 @@ exports.main = async (event, context) => {
         timestamp: db.serverDate()
       }
     })
-
+    // ✅ 写入单词复习记录（wordReview），增加权重字段
+    await db.collection('wordReview').add({
+        data: {
+          _openid: openid,
+          word: correct.word,
+          translate: correct.translate,
+          level,
+          weight: 4, // 固定权重为4
+          isWaitReview: false,
+          timestamp: db.serverDate() // 记录学习时间
+        }
+      })
     return {
       word: correct.word,
       choices: shuffledChoices,
