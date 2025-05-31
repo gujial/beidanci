@@ -9,14 +9,58 @@ Page({
         startDate: '', // yyyy-mm-dd
         endDate: '',
         levels: ['全部', 'cet4', 'cet6'],
-        levelIndex: 0, // 默认选中“全部”
+        levelOptions: {}, // 存储词库选项的映射关系
+        levelIndex: 0, // 默认选中"全部"
         limit: 20,
         skip: 0,
         hasMore: true
     },
 
     onLoad() {
-        this.getRecords()
+        this.fetchUserWordbanks();
+    },
+    
+    // 获取用户词库列表，更新筛选选项
+    fetchUserWordbanks() {
+        wx.cloud.callFunction({
+            name: 'wordbank',
+            data: {
+                action: 'getWordbanks'
+            },
+            success: res => {
+                if (res.result.success) {
+                    // 构建所有词库选项
+                    const userBanks = res.result.data || [];
+                    const levels = ['全部', 'cet4', 'cet6'];
+                    const levelOptions = {
+                        '全部': '',
+                        'cet4': 'cet4', 
+                        'cet6': 'cet6'
+                    };
+                    
+                    // 添加用户词库选项
+                    userBanks.forEach(bank => {
+                        levels.push(bank.name);
+                        levelOptions[bank.name] = 'user_' + bank._id;
+                    });
+                    
+                    this.setData({
+                        levels,
+                        levelOptions
+                    }, () => {
+                        this.getRecords();
+                    });
+                } else {
+                    // 即使获取词库失败，也加载记录
+                    this.getRecords();
+                }
+            },
+            fail: err => {
+                console.error('获取词库列表失败', err);
+                // 即使获取词库失败，也加载记录
+                this.getRecords();
+            }
+        });
     },
 
     onSearchInput(e) {
@@ -59,12 +103,14 @@ Page({
             endDate,
             levels,
             levelIndex,
+            levelOptions,
             limit
         } = this.data
 
         let startTime = startDate ? new Date(startDate).getTime() : null
         let endTime = endDate ? new Date(endDate).getTime() + 86400000 - 1 : null
         const selectedLevel = levels[levelIndex]
+        const selectedLevelValue = levelOptions[selectedLevel]
 
         wx.cloud.callFunction({
             name: 'getLearnHistory',
@@ -72,7 +118,7 @@ Page({
                 keyword: searchKeyword,
                 startTime,
                 endTime,
-                level: selectedLevel !== '全部' ? selectedLevel : undefined,
+                level: selectedLevelValue || undefined,
                 limit,
                 skip: 0
             },
@@ -134,12 +180,14 @@ Page({
             endDate,
             levels,
             levelIndex,
+            levelOptions,
             limit,
             skip
         } = this.data
         let startTime = startDate ? new Date(startDate).getTime() : null
         let endTime = endDate ? new Date(endDate).getTime() + 86400000 - 1 : null
         const selectedLevel = levels[levelIndex]
+        const selectedLevelValue = levelOptions[selectedLevel]
 
         wx.cloud.callFunction({
             name: 'getLearnHistory',
@@ -147,7 +195,7 @@ Page({
                 keyword: searchKeyword,
                 startTime,
                 endTime,
-                level: selectedLevel !== '全部' ? selectedLevel : undefined,
+                level: selectedLevelValue || undefined,
                 limit,
                 skip
             },

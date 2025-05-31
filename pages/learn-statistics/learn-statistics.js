@@ -95,11 +95,16 @@ Page({
             const chart = echarts.init(canvas, null, { width, height, devicePixelRatio: dpr });
             canvas.setChart(chart);
 
-            const levelMap = { cet4: 'CET-4', cet6: 'CET-6' };
+            // 预设词库名称映射
+            const levelMap = { 
+                cet4: 'CET-4', 
+                cet6: 'CET-6'
+            };
+            
             const byLevel = this.data.stats.byLevel || {};
 
             const pieData = Object.entries(byLevel).map(([level, count]) => ({
-                name: levelMap[level] || level,
+                name: levelMap[level] || level, // 如果是用户词库，直接使用词库名称
                 value: count
             }));
 

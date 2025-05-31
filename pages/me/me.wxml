@@ -24,6 +24,10 @@
             <text class="menu-text">每日打卡</text>
             <text class="menu-arrow">></text>
         </view>
+        <view class="menu-item" bindtap="goToWordbank">
+            <text class="menu-text">自定义词库</text>
+            <text class="menu-arrow">></text>
+        </view>
         <view class="menu-item" bindtap="goToHistory">
             <text class="menu-text">查看学习记录</text>
             <text class="menu-arrow">></text>
