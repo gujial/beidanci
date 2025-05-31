@@ -6,9 +6,9 @@ Page({
         score: 0,
         correctCount: 0,
         incorrectCount: 0,
-        
-        selectedWordCount: 15,//一组单词个数，默认为15
-        groupCount:0,//当前完成背诵单词个数
+
+        selectedWordCount: 15, //一组单词个数，默认为15
+        groupCount: 0, //当前完成背诵单词个数
         isGroupCompleted: false, // 是否完成一组学习
 
         levelOptions: ['CET-4', 'CET-6', '我的词库'],
@@ -33,21 +33,18 @@ Page({
 
         const savedLevel = wx.getStorageSync('selectedLevel')
         const savedLevelName = wx.getStorageSync('selectedLevelName')
-        const savedWordCount = wx.getStorageSync('selectedWordCount') || 15;//加载本地每组单词个数
+        const savedWordCount = wx.getStorageSync('selectedWordCount') || 15; //加载本地每组单词个数
         const savedUserBankId = wx.getStorageSync('userBankId')
 
         if (savedLevel && savedLevelName) {
             this.setData({
                 selectedLevel: savedLevel,
-                selectedLevelName: savedLevelName, 
-                selectedWordCount: savedWordCount
-            })
-        }
-        this.loadWord()
                 selectedLevelName: savedLevelName,
+                selectedWordCount: savedWordCount,
                 userBankId: savedUserBankId || ''
             })
         }
+        this.loadWord()
 
         // 如果选择的是用户词库但没有指定ID，获取用户词库列表
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
@@ -73,10 +70,20 @@ Page({
             fail: err => {
                 console.error('打卡失败', err)
             }
+        });
+
+        wx.cloud.callFunction({
+            name: 'scheduleUpdateReview',
+            success: res => {
+                console.log(res.result)
+            },
+            fail: err => {
+                console.error('更新复习单词失败', err)
+            }
         })
     },
 
-    onShow: function() {
+    onShow: function () {
         // 如果选择的是用户词库，刷新词库列表
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
             this.getUserBanks();
@@ -84,7 +91,7 @@ Page({
     },
 
     // 获取用户词库列表
-    getUserBanks: function() {
+    getUserBanks: function () {
         wx.showLoading({
             title: '加载词库...',
         });
@@ -96,7 +103,7 @@ Page({
             .get()
             .then(res => {
                 wx.hideLoading();
-                
+
                 if (res.data && res.data.length > 0) {
                     this.setData({
                         userBanks: res.data,
@@ -136,10 +143,10 @@ Page({
     },
 
     // 选择用户词库
-    onUserBankChange: function(e) {
+    onUserBankChange: function (e) {
         const index = e.detail.value;
         const bank = this.data.userBanks[index];
-        
+
         // 检查词库是否有单词
         if (!bank.words || bank.words.length === 0) {
             wx.showToast({
@@ -149,7 +156,7 @@ Page({
             });
             return;
         }
-        
+
         if (bank.words.length < 1) {
             wx.showToast({
                 title: '词库中单词数量不足，至少需要1个单词',
@@ -158,7 +165,7 @@ Page({
             });
             return;
         }
-        
+
         this.setData({
             userBankId: bank._id,
             selectedLevelName: bank.name,
@@ -179,7 +186,7 @@ Page({
         if (index === '2') { // 我的词库
             level = 'user';
             name = '我的词库';
-            
+
             // 重置词库ID，准备展示词库选择器
             this.setData({
                 selectedLevel: level,
@@ -214,9 +221,11 @@ Page({
     //云函数加载单词
     loadWord: function () {
 
-        const { isGroupCompleted } = this.data;
+        const {
+            isGroupCompleted
+        } = this.data;
         if (isGroupCompleted) return; // 已完成一组时不再加载新单词
-        
+
         // 如果是用户词库但没有选择具体词库，则不加载
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
             return;
@@ -273,7 +282,7 @@ Page({
             this.setData({
                 score: this.data.score + 1,
                 correctCount: this.data.correctCount + 1,
-                groupCount:this.data.groupCount+1
+                groupCount: this.data.groupCount + 1
             });
             wx.showToast({
                 title: '答对了!',
@@ -293,16 +302,18 @@ Page({
             if (this.data.groupCount >= this.data.selectedWordCount) {
                 this.handleGroupCompleted(); // 触发完成一组逻辑
             }
-          
-           this.loadWord();
+
+            this.loadWord();
         }, 1000)
-           
+
     },
-    handleGroupCompleted:function(){
-        const { selectedWordCount } = this.data;
+    handleGroupCompleted: function () {
+        const {
+            selectedWordCount
+        } = this.data;
         this.setData({
-            groupCount:0,
-            isGroupCompleted:true,
+            groupCount: 0,
+            isGroupCompleted: true,
         })
         setTimeout(() => {
             wx.navigateTo({
@@ -340,7 +351,7 @@ Page({
     },
 
     // 跳转到词库管理页面
-    goToWordbank: function() {
+    goToWordbank: function () {
         wx.navigateTo({
             url: '/pages/wordbank/wordbank'
         });

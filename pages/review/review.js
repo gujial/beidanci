@@ -13,7 +13,50 @@ Page({
 
         levelOptions: ['CET-4', 'CET-6'],//词库选项（多余）
         selectedLevel: 'cet4', // 实际传给云函数的值
-        selectedLevelName: 'CET-4'//默认选项
+        selectedLevelName: 'CET-4',//默认选项
+
+        wordId: -1,
+        currentWeight: -1
+    },
+
+    onLevelChange: function (e) {
+        const index = e.detail.value;
+        let level, name;
+
+        if (index === '2') { // 我的词库
+            level = 'user';
+            name = '我的词库';
+
+            // 重置词库ID，准备展示词库选择器
+            this.setData({
+                selectedLevel: level,
+                selectedLevelName: name,
+                userBankId: '',
+                // 重置统计数据
+                score: 0,
+                correctCount: 0,
+                incorrectCount: 0
+            }, () => {
+                this.getUserBanks();
+            });
+            return;
+        } else {
+            level = index === '1' ? 'cet6' : 'cet4';
+            name = this.data.levelOptions[index];
+        }
+
+        this.setData({
+            selectedLevel: level,
+            selectedLevelName: name,
+            userBankId: '', // 清除用户词库ID
+            showUserBankPicker: false,
+            // 重置统计数据
+            score: 0,
+            correctCount: 0,
+            incorrectCount: 0
+        }, () => {
+            this.loadWord();
+        });
     },
 
     onLoad: function () {
@@ -45,6 +88,13 @@ Page({
             
             success: res => {
                 if (res.result.success && res.result.data) {
+                    if (res.result.data.length == 0) {
+                        wx.showToast({
+                            title: '没有需要复习的单词',
+                            icon: 'none'
+                        });
+                        setTimeout(()=>wx.navigateBack(), 1000);
+                    }
                   this.setData({
                     currentWord: res.result.data.word,
                     options: res.result.data.choices,
@@ -59,7 +109,8 @@ Page({
                     })
                 }
             },
-            fail: () => {
+            fail: (err) => {
+                console.log(err)
                 wx.showToast({
                     title: '云函数调用失败',
                     icon: 'none'

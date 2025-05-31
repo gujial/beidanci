@@ -13,7 +13,6 @@
     <view class="score-section">
         <text>得分：{{score}} | </text>
         <text>正确：{{correctCount}} | 错误：{{incorrectCount}}</text>
-        <text> | 答案：{{correctIndex}}</text>
     </view>
 
     <view class="picker-section">
