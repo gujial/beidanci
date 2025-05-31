@@ -103,7 +103,9 @@ Page({
             
             const byLevel = this.data.stats.byLevel || {};
 
-            const pieData = Object.entries(byLevel).map(([level, count]) => ({
+            const pieData = Object.entries(byLevel)
+            .filter(([level, _]) => level !== 'user')
+            .map(([level, count]) => ({
                 name: levelMap[level] || level, // 如果是用户词库，直接使用词库名称
                 value: count
             }));
