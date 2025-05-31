@@ -6,6 +6,10 @@ Page({
         score: 0,
         correctCount: 0,
         incorrectCount: 0,
+        
+        selectedWordCount: 15,//一组单词个数，默认为15
+        groupCount:0,//当前完成背诵单词个数
+        isGroupCompleted: false, // 是否完成一组学习
 
         levelOptions: ['CET-4', 'CET-6', '我的词库'],
         selectedLevel: 'cet4', // 实际传给云函数的值
@@ -29,11 +33,17 @@ Page({
 
         const savedLevel = wx.getStorageSync('selectedLevel')
         const savedLevelName = wx.getStorageSync('selectedLevelName')
+        const savedWordCount = wx.getStorageSync('selectedWordCount') || 15;//加载本地每组单词个数
         const savedUserBankId = wx.getStorageSync('userBankId')
 
         if (savedLevel && savedLevelName) {
             this.setData({
                 selectedLevel: savedLevel,
+                selectedLevelName: savedLevelName, 
+                selectedWordCount: savedWordCount
+            })
+        }
+        this.loadWord()
                 selectedLevelName: savedLevelName,
                 userBankId: savedUserBankId || ''
             })
@@ -201,8 +211,12 @@ Page({
             this.loadWord();
         });
     },
-
+    //云函数加载单词
     loadWord: function () {
+
+        const { isGroupCompleted } = this.data;
+        if (isGroupCompleted) return; // 已完成一组时不再加载新单词
+        
         // 如果是用户词库但没有选择具体词库，则不加载
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
             return;
@@ -250,7 +264,7 @@ Page({
             }
         });
     },
-
+    //判断单词对错
     selectAnswer: function (e) {
         const selectedIndex = e.currentTarget.dataset.index;
         const correctIndex = this.data.correctIndex;
@@ -258,7 +272,8 @@ Page({
         if (selectedIndex === correctIndex) {
             this.setData({
                 score: this.data.score + 1,
-                correctCount: this.data.correctCount + 1
+                correctCount: this.data.correctCount + 1,
+                groupCount:this.data.groupCount+1
             });
             wx.showToast({
                 title: '答对了!',
@@ -275,15 +290,32 @@ Page({
         }
 
         setTimeout(() => {
-            this.loadWord();
+            if (this.data.groupCount >= this.data.selectedWordCount) {
+                this.handleGroupCompleted(); // 触发完成一组逻辑
+            }
+          
+           this.loadWord();
+        }, 1000)
+           
+    },
+    handleGroupCompleted:function(){
+        const { selectedWordCount } = this.data;
+        this.setData({
+            groupCount:0,
+            isGroupCompleted:true,
+        })
+        setTimeout(() => {
+            wx.navigateTo({
+                url: `/pages/learn-over/learn-over` // 传递得分至结束页面
+            });
         }, 1000);
     },
-
+    //获取最终得分
     saveScore: function () {
         const score = this.data.score;
         wx.setStorageSync('userScore', score);
     },
-
+    //监听页面卸载
     onUnload: function () {
         const finalScore = this.data.score;
 

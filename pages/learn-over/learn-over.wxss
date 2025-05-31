@@ -1,0 +1,17 @@
+/* pages/learn-over/learn-over.wxss */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px;
+  }
+  .over {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  button {
+    margin: 10px 0;
+    width: 80%;
+  }

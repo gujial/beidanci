@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/learn/learn",
+    "pages/review/review",
     "pages/ranking/ranking",
     "pages/me/me",
     "pages/register/register",
@@ -10,6 +11,7 @@
     "pages/learn-statistics/learn-statistics",
     "pages/settings/settings",
     "pages/about/about",
+    "pages/learn-over/learn-over"
     "pages/wordbank/wordbank",
     "pages/wordbank-add/wordbank-add",
     "pages/wordbank-detail/wordbank-detail"

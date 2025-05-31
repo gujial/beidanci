@@ -138,6 +138,26 @@ exports.main = async (event, context) => {
     const shuffledChoices = shuffleArray(choices)
     const correctIndex = shuffledChoices.indexOf(correct.translate)
 
+    await db.collection('learnHistory').add({
+      data: {
+        _openid: openid,
+        word: correct.word,
+        translate: correct.translate,
+        level,
+        timestamp: db.serverDate()
+      }
+    })
+    await db.collection('wordReview').add({
+        data: {
+          _openid: openid,
+          word: correct.word,
+          translate: correct.translate,
+          level,
+          weight: 4, // 固定权重为4
+          isWaitReview: false,
+          timestamp: db.serverDate() // 记录学习时间
+        }
+      })
     return {
       word: correct.word,
       choices: shuffledChoices,

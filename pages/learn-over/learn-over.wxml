@@ -1,0 +1,6 @@
+<!--pages/learn-over/learn-over.wxml-->
+<view class="container">
+    <view class="over">您已完成一组单词的学习</view>
+    <button bindtap="goToLearn">再学一组</button>
+    <button bindtap="goToIndex">完成学习</button>
+</view>

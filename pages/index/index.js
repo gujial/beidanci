@@ -10,6 +10,11 @@ Page({
       url: '/pages/learn/learn'
     })
   },
+  goToReview: function () {
+    wx.navigateTo({
+      url: '/pages/review/review'
+    })
+  },
   async onShow() {
     var page = this;
     wx.request({
