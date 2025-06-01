@@ -138,15 +138,6 @@ exports.main = async (event, context) => {
     const shuffledChoices = shuffleArray(choices)
     const correctIndex = shuffledChoices.indexOf(correct.translate)
 
-    await db.collection('learnHistory').add({
-      data: {
-        _openid: openid,
-        word: correct.word,
-        translate: correct.translate,
-        level,
-        timestamp: db.serverDate()
-      }
-    })
     await db.collection('wordReview').add({
         data: {
           _openid: openid,

@@ -16,7 +16,10 @@ Page({
         selectedLevelName: 'CET-4',
         userBankId: '', // 用户自定义词库ID
         userBanks: [], // 用户词库列表
-        showUserBankPicker: false // 是否显示用户词库选择器
+        showUserBankPicker: false, // 是否显示用户词库选择器
+        answerSelected: false, // 是否已经选择了答案
+        selectedOptionIndex: -1, // 用户选择的选项索引
+        optionClassList: []
     },
 
     onLoad: function (options) {
@@ -44,7 +47,6 @@ Page({
                 userBankId: savedUserBankId || ''
             })
         }
-        this.loadWord()
 
         // 如果选择的是用户词库但没有指定ID，获取用户词库列表
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
@@ -220,6 +222,9 @@ Page({
     },
     //云函数加载单词
     loadWord: function () {
+        this.setData({
+            optionClassList: this.data.options.map(() => '')
+        });
 
         const {
             isGroupCompleted
@@ -275,9 +280,27 @@ Page({
     },
     //判断单词对错
     selectAnswer: function (e) {
+        if (this.data.answerSelected) {
+            return;
+        }
+
         const selectedIndex = e.currentTarget.dataset.index;
         const correctIndex = this.data.correctIndex;
 
+        const optionClassList = this.data.options.map((_, idx) => {
+            if (idx === correctIndex) return 'correct';
+            if (idx === selectedIndex) return 'incorrect';
+            return '';
+        });
+
+        // 设置选中状态和索引
+        this.setData({
+            answerSelected: true,
+            selectedOptionIndex: selectedIndex,
+            optionClassList: optionClassList
+        });
+
+        // 判断正误
         if (selectedIndex === correctIndex) {
             this.setData({
                 score: this.data.score + 1,
@@ -288,6 +311,7 @@ Page({
                 title: '答对了!',
                 icon: 'success'
             });
+            setTimeout(()=>wx.hideToast(), 800);
         } else {
             this.setData({
                 incorrectCount: this.data.incorrectCount + 1
@@ -296,17 +320,24 @@ Page({
                 title: '答错了',
                 icon: 'none'
             });
+            setTimeout(()=>wx.hideToast(), 800);
         }
 
+        // 延迟加载下一题
         setTimeout(() => {
             if (this.data.groupCount >= this.data.selectedWordCount) {
-                this.handleGroupCompleted(); // 触发完成一组逻辑
+                this.handleGroupCompleted();
             }
 
-            this.loadWord();
-        }, 1000)
+            this.setData({
+                answerSelected: false,
+                selectedOptionIndex: -1,
+            });
 
+            this.loadWord();
+        }, 1500);
     },
+
     handleGroupCompleted: function () {
         const {
             selectedWordCount
