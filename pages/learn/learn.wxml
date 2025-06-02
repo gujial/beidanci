@@ -1,6 +1,33 @@
 <view class="container">
-    <view class="word-section">
-        <text class="word">{{currentWord}}</text>
+    <view class="card learn-card animate-fade-in">
+        <view class="learn-header">
+            <text class="text-title">今日学习</text>
+            <text class="text-subtitle">{{currentProgress}}/{{totalWords}} 单词</text>
+        </view>
+
+        <view class="word-display">
+            <text class="word">{{currentWord.english}}</text>
+            <text class="pronunciation" wx:if="{{currentWord.pronunciation}}">
+                [{{currentWord.pronunciation}}]
+            </text>
+        </view>
+
+        <view class="meaning-section">
+            <text class="meaning">{{currentWord.chinese}}</text>
+        </view>
+
+        <view class="button-group">
+            <button class="btn btn-primary" bindtap="showMeaning">
+                <text class="btn-text">显示释义</text>
+            </button>
+            <button class="btn btn-secondary" bindtap="nextWord">
+                <text class="btn-text">下一个</text>
+            </button>
+        </view>
+
+        <view class="progress-bar">
+            <view class="progress" style="width: {{progressPercentage}}%"></view>
+        </view>
     </view>
 
     <view class="options-section">

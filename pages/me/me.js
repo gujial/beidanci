@@ -118,5 +118,15 @@ Page({
             content: '单词背诵小程序 v1.0.0',
             showCancel: false
         });
+    },
+    goToTomatoStudy() {
+        wx.navigateTo({
+            url: '/pages/tomato-study/tomato-study'
+        })
+    },
+    goToStudyCheckin() {
+        wx.navigateTo({
+            url: '/pages/study-checkin/study-checkin'
+        })
     }
 });

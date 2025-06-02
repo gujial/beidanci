@@ -120,3 +120,121 @@
     color: #ccc;
   }
   
+.profile-card {
+  width: 90%;
+  max-width: 700rpx;
+  text-align: center;
+  padding: 40rpx;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 4rpx solid var(--primary-color);
+}
+
+.user-info {
+  text-align: left;
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 30rpx 0;
+  margin-bottom: 40rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-top: 10rpx;
+}
+
+.menu-section {
+  margin-bottom: 40rpx;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.list-item .icon {
+  margin-right: 20rpx;
+}
+
+.btn {
+  width: 100%;
+}
+
+/* 新增功能入口样式 */
+.feature-section {
+  margin-bottom: 40rpx;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.feature-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  transition: background-color 0.3s ease;
+}
+
+.feature-item:hover {
+  background-color: #f0f0f0;
+}
+
+.feature-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 15rpx;
+}
+
+.feature-text {
+  font-size: 28rpx;
+  color: var(--text-color);
+}
+  
