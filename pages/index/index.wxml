@@ -1,7 +1,18 @@
 <view class="container">
-  <text class="welcome">{{welcomeText}}</text>
-  <text class="welcome">好好学习，天天向上</text>
-  <button bindtap="goToLearn">开始今日学习</button>
-  <button bindtap="goToReview">开始今日复习</button>
-  <text class="intro">{{intro}}</text>
+  <view class="card index-card">
+    <text class="text-title">背单词</text>
+    <text class="text-subtitle">{{welcomeText}}</text>
+    <text class="motto">好好学习，天天向上</text>
+    
+    <view class="button-group">
+      <button class="btn btn-primary" bindtap="goToLearn">
+        <text class="btn-text">开始今日学习</text>
+      </button>
+      <button class="btn btn-secondary" bindtap="goToReview">
+        <text class="btn-text">开始今日复习</text>
+      </button>
+    </view>
+    
+    <text class="intro">{{intro}}</text>
+  </view>
 </view>

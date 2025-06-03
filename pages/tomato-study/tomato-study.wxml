@@ -1,0 +1,53 @@
+<view class="container">
+  <view class="card tomato-card animate-fade-in">
+    <view class="tomato-header">
+      <text class="text-title">番茄学习</text>
+      <text class="text-subtitle">专注提升词汇能力</text>
+    </view>
+
+    <view class="timer-display">
+      <text class="timer">{{formatTime}}</text>
+      <text class="timer-status">{{timerStatus}}</text>
+    </view>
+
+    <view class="study-mode">
+      <picker mode="selector" range="{{studyModes}}" bindchange="selectStudyMode">
+        <view class="picker-display">
+          当前模式：{{currentStudyMode}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="word-section" wx:if="{{isStudying}}">
+      <text class="current-word">{{currentWord.english}}</text>
+      <text class="word-meaning">{{currentWord.chinese}}</text>
+    </view>
+
+    <view class="button-group">
+      <button class="btn btn-primary" bindtap="startTimer" wx:if="{{!isTimerRunning}}">
+        <text class="btn-text">开始学习</text>
+      </button>
+      <button class="btn btn-secondary" bindtap="pauseTimer" wx:else>
+        <text class="btn-text">暂停</text>
+      </button>
+      <button class="btn btn-secondary" bindtap="resetTimer">
+        <text class="btn-text">重置</text>
+      </button>
+    </view>
+
+    <view class="progress-bar">
+      <view class="progress" style="width: {{progressPercentage}}%"></view>
+    </view>
+
+    <view class="study-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{completedTomatoCount}}</text>
+        <text class="stat-label">完成番茄</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalStudyTime}}</text>
+        <text class="stat-label">学习时长(分)</text>
+      </view>
+    </view>
+  </view>
+</view> 

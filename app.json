@@ -14,7 +14,9 @@
     "pages/learn-over/learn-over",
     "pages/wordbank/wordbank",
     "pages/wordbank-add/wordbank-add",
-    "pages/wordbank-detail/wordbank-detail"
+    "pages/wordbank-detail/wordbank-detail",
+    "pages/tomato-study/tomato-study",
+    "pages/study-checkin/study-checkin"
   ],
   "window": {
     "backgroundTextStyle": "light",
