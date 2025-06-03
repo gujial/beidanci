@@ -1,57 +1,80 @@
+.background-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+    transform: scale(1.1);
+    z-index: -2;
+}
+
+.background-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+}
+
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f0f4f8;
-  padding: 0 20px;
+    min-height: 100vh;
+    padding: 32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .index-card {
-  width: 90%;
-  max-width: 500rpx;
-  text-align: center;
-  padding: 40rpx;
-  display: flex;
-  flex-direction: column;
+    width: 90%;
+    max-width: 500rpx;
+    text-align: center;
+    padding: 40rpx;
+    display: flex;
+    flex-direction: column;
 }
 
 .motto {
-  font-size: 32rpx;
-  color: #2c3e50;
-  margin: 30rpx 0;
-  font-style: italic;
+    font-size: 32rpx;
+    color: #2c3e50;
+    margin: 30rpx 0;
+    font-style: italic;
 }
 
 .button-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .btn {
-  width: 100%;
-  margin: 15rpx 0;
+    width: 100%;
+    margin: 15rpx 0;
 }
 
 .btn-primary {
-  background-color: #4CAF50;
+    background-color: #4CAF50;
 }
 
 .btn-secondary {
-  background-color: #3498db;
+    background-color: #3498db;
 }
 
 .btn-text {
-  color: white;
-  font-size: 28rpx;
+    color: white;
+    font-size: 28rpx;
 }
 
 .intro {
-  font-size: 24rpx;
-  color: #7f8c8d;
-  margin-top: 30rpx;
-  text-align: center;
+    font-size: 24rpx;
+    color: #7f8c8d;
+    margin-top: 30rpx;
+    text-align: center;
 }

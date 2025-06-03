@@ -25,5 +25,30 @@ Page({
         });
       }
     })
+  },
+
+  onLoad() {
+    wx.request({
+        url: 'https://cn.bing.com/HPImageArchive.aspx',
+        method: 'GET',
+        data: {
+          format: 'js',
+          idx: 0,
+          n: 1
+        },
+        success: (res) => {
+          if (res.statusCode === 200) {
+            const imageUrl = 'https://cn.bing.com' + res.data.images[0].url;
+            console.log('Bing 背景图 URL:', imageUrl);
+            // 设置为页面背景
+            this.setData({
+              backgroundImageUrl: imageUrl
+            });
+          }
+        },
+        fail: (err) => {
+          console.error('获取 Bing 图片失败', err);
+        }
+      });      
   }
 })

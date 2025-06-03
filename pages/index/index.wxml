@@ -1,3 +1,6 @@
+<view class="background-blur" style="background-image: url({{backgroundImageUrl}});"></view>
+<view class="background-mask"></view>
+
 <view class="container">
   <view class="card index-card">
     <text class="text-title">背单词小程序</text>
