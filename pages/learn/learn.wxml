@@ -1,66 +1,41 @@
 <view class="container">
     <view class="card learn-card animate-fade-in">
-        <view class="learn-header">
-            <text class="text-title">今日学习</text>
-            <text class="text-subtitle">{{currentProgress}}/{{totalWords}} 单词</text>
+        <view class="word-section">
+            <text class="word">{{currentWord}}</text>
         </view>
 
-        <view class="word-display">
-            <text class="word">{{currentWord.english}}</text>
-            <text class="pronunciation" wx:if="{{currentWord.pronunciation}}">
-                [{{currentWord.pronunciation}}]
-            </text>
-        </view>
-
-        <view class="meaning-section">
-            <text class="meaning">{{currentWord.chinese}}</text>
-        </view>
-
-        <view class="button-group">
-            <button class="btn btn-primary" bindtap="showMeaning">
-                <text class="btn-text">显示释义</text>
-            </button>
-            <button class="btn btn-secondary" bindtap="nextWord">
-                <text class="btn-text">下一个</text>
+        <view class="options-section">
+            <button wx:for="{{options}}" wx:key="index" data-index="{{index}}" bindtap="selectAnswer" class="option-button {{optionClassList[index]}}">
+                {{item}}
             </button>
         </view>
 
-        <view class="progress-bar">
-            <view class="progress" style="width: {{progressPercentage}}%"></view>
+        <view class="score-section">
+            <text>得分：{{score}} | </text>
+            <text>正确：{{correctCount}} | 错误：{{incorrectCount}}</text>
         </view>
-    </view>
 
-    <view class="options-section">
-        <button wx:for="{{options}}" wx:key="index" data-index="{{index}}" bindtap="selectAnswer" class="option-button {{optionClassList[index]}}">
-            {{item}}
-        </button>
-    </view>
-
-    <view class="score-section">
-        <text>得分：{{score}} | </text>
-        <text>正确：{{correctCount}} | 错误：{{incorrectCount}}</text>
-    </view>
-
-    <view class="picker-section">
-        <picker mode="selector" range="{{levelOptions}}" bindchange="onLevelChange">
-            <view class="picker-display">
-                当前词库：{{selectedLevelName}}
-            </view>
-        </picker>
-    </view>
-
-    <!-- 用户词库选择器 -->
-    <view class="user-bank-picker" wx:if="{{showUserBankPicker}}">
-        <view class="picker-header">
-            <text>请选择要学习的词库</text>
+        <view class="picker-section">
+            <picker mode="selector" range="{{levelOptions}}" bindchange="onLevelChange">
+                <view class="picker-display">
+                    当前词库：{{selectedLevelName}}
+                </view>
+            </picker>
         </view>
-        <picker mode="selector" range="{{userBanks}}" range-key="name" bindchange="onUserBankChange">
-            <view class="picker-display">
-                选择词库
+
+        <!-- 用户词库选择器 -->
+        <view class="user-bank-picker" wx:if="{{showUserBankPicker}}">
+            <view class="picker-header">
+                <text>请选择要学习的词库</text>
             </view>
-        </picker>
-        <view class="manage-btn">
-            <button size="mini" type="primary" bindtap="goToWordbank">管理我的词库</button>
+            <picker mode="selector" range="{{userBanks}}" range-key="name" bindchange="onUserBankChange">
+                <view class="picker-display">
+                    选择词库
+                </view>
+            </picker>
+            <view class="manage-btn">
+                <button size="mini" type="primary" bindtap="goToWordbank">管理我的词库</button>
+            </view>
         </view>
     </view>
 </view>

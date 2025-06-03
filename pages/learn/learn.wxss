@@ -16,10 +16,6 @@
     align-items: stretch;
 }
 
-.options-section button {
-    margin: 10px 0;
-}
-
 .score-section {
     margin-top: 30px;
     text-align: center;

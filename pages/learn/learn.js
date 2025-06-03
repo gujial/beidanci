@@ -47,7 +47,6 @@ Page({
                 userBankId: savedUserBankId || ''
             })
         }
-        this.loadWord()
 
         // 如果选择的是用户词库但没有指定ID，获取用户词库列表
         if (this.data.selectedLevel === 'user' && !this.data.userBankId) {
@@ -330,7 +329,6 @@ Page({
                 this.handleGroupCompleted();
             }
 
-<<<<<<< HEAD
             this.setData({
                 answerSelected: false,
                 selectedOptionIndex: -1,
@@ -340,12 +338,6 @@ Page({
         }, 1500);
     },
 
-=======
-            this.loadWord();
-        }, 1000)
-
-    },
->>>>>>> b7efd4d (feat: 完成单词复习功能)
     handleGroupCompleted: function () {
         const {
             selectedWordCount

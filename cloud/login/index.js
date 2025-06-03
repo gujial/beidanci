@@ -17,7 +17,7 @@ exports.main = async (event) => {
     // 3、先查询当前用户是否已注册过
     const { data } = await users
       .where({
-        _openId: wxContext.OPENID,
+        _openid: wxContext.OPENID,
       })
       .get();
 

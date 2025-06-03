@@ -91,6 +91,7 @@ page {
   margin-bottom: 20rpx;
   box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  justify-content: space-between;
 }
 
 .list-item:hover {

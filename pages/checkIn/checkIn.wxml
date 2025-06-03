@@ -1,8 +1,22 @@
 <view class="checkin-history">
-  <text class="title">📅 本月打卡日历</text>
-  <calendar checkedDates="{{checkedDates}}" />
-  <text class="title">📌 历史打卡记录</text>
-  <view wx:for="{{checkInHistory}}" wx:key="date" class="history-item">
-    <text>{{item.date}} - 连续 {{item.streak}} 天</text>
+  <view class="section">
+    <text class="title">📅 本月打卡日历</text>
+    <view class="calendar-wrapper">
+      <calendar checkedDates="{{checkedDates}}" />
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="title">📌 历史打卡记录</text>
+    <view class="history-list">
+      <view wx:for="{{checkInHistory}}" wx:key="date" class="history-item">
+        <view class="item-left">
+          <text class="date">{{item.date}}</text>
+        </view>
+        <view class="item-right">
+          <text class="streak">连续 {{item.streak}} 天</text>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

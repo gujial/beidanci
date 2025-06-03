@@ -13,15 +13,9 @@
       </text>
     </view>
 
-<<<<<<< HEAD
     <view class="meaning-section">
       <text class="meaning" wx:if="{{showMeaning}}">{{currentWord.chinese}}</text>
       <text class="meaning hint" wx:else>点击显示释义</text>
-=======
-    <view class="score-section">
-        <text>得分：{{score}} | </text>
-        <text>正确：{{correctCount}} | 错误：{{incorrectCount}}</text>
->>>>>>> b7efd4d (feat: 完成单词复习功能)
     </view>
 
     <view class="button-group">

@@ -109,24 +109,12 @@ Page({
     },
     goToAbout: function(e) {
         wx.navigateTo({
-          url: '/pages/about/about',
-        })
-    },
-    goToAbout: function(e) {
-        wx.showModal({
-            title: '关于',
-            content: '单词背诵小程序 v1.0.0',
-            showCancel: false
-        });
+            url: '/pages/about/about',
+          })
     },
     goToTomatoStudy() {
         wx.navigateTo({
             url: '/pages/tomato-study/tomato-study'
-        })
-    },
-    goToStudyCheckin() {
-        wx.navigateTo({
-            url: '/pages/study-checkin/study-checkin'
         })
     }
 });

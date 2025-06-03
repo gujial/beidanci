@@ -1,6 +1,6 @@
 <view class="container">
   <view class="card index-card">
-    <text class="text-title">背单词</text>
+    <text class="text-title">背单词小程序</text>
     <text class="text-subtitle">{{welcomeText}}</text>
     <text class="motto">好好学习，天天向上</text>
     

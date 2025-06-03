@@ -1,59 +1,60 @@
 <!-- pages/me/me.wxml -->
 <view class="container">
-  <view class="card profile-card animate-fade-in">
-    <view class="profile-header">
-      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
-      <view class="user-info">
-        <text class="text-title">{{userInfo.nickName}}</text>
-        <text class="text-subtitle">学习达人</text>
-      </view>
-    </view>
-
-    <view class="stats-section">
-      <view class="stat-item">
-        <text class="stat-value">{{totalWords}}</text>
-        <text class="stat-label">已学单词</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-value">{{continuousDays}}</text>
-        <text class="stat-label">连续天数</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-value">{{level}}</text>
-        <text class="stat-label">学习等级</text>
-      </view>
-    </view>
-
-    <view class="feature-section">
-      <view class="feature-grid">
-        <view class="feature-item" bindtap="goToTomatoStudy">
-          <image class="feature-icon" src="/images/icons/tomato.png"></image>
-          <text class="feature-text">番茄学习</text>
+    <view class="card profile-card animate-fade-in">
+        <view class="profile-header">
+            <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+            <view class="userinfo">
+                <text class="text-title">{{userInfo.nickName}}</text>
+                <text class="text-subtitle">学习达人</text>
+            </view>
         </view>
-        <view class="feature-item" bindtap="goToStudyCheckin">
-          <image class="feature-icon" src="/images/icons/checkin.png"></image>
-          <text class="feature-text">学习打卡</text>
+
+        <view class="feature-section">
+            <view class="feature-grid">
+                <view class="feature-item" bindtap="goToTomatoStudy">
+                    <image class="feature-icon" src="/images/icons/tomato.png"></image>
+                    <text class="feature-text">番茄学习</text>
+                </view>
+                <view class="feature-item" bindtap="goToCheckIn">
+                    <image class="feature-icon" src="/images/icons/checkin.png"></image>
+                    <text class="feature-text">学习打卡</text>
+                </view>
+            </view>
         </view>
-      </view>
-    </view>
 
-    <view class="menu-section">
-      <view class="list-item" bindtap="goToWordBank">
-        <image class="icon" src="/images/icons/wordbank.png"></image>
-        <text>我的单词库</text>
-      </view>
-      <view class="list-item" bindtap="goToSettings">
-        <image class="icon" src="/images/icons/settings.png"></image>
-        <text>设置</text>
-      </view>
-      <view class="list-item" bindtap="goToStatistics">
-        <image class="icon" src="/images/icons/statistics.png"></image>
-        <text>学习统计</text>
-      </view>
-    </view>
+        <view class="menu-section">
+            <view class="list-item" bindtap="goToWordbank">
+                <text class="menu-text">自定义词库</text>
+                <text class="menu-arrow">></text>
+            </view>
+            <view class="list-item" bindtap="goToHistory">
+                <text class="menu-text">查看学习记录</text>
+                <text class="menu-arrow">></text>
+            </view>
+            <view class="list-item" bindtap="goToStatistics">
+                <text class="menu-text">查看学习统计</text>
+                <text class="menu-arrow">></text>
+            </view>
+            <view class="list-item" bindtap="goToRanking">
+                <text class="menu-text">查看排行榜</text>
+                <text class="menu-arrow">></text>
+            </view>
+            <view class="list-item" bindtap="goToSettings">
+                <text class="menu-text">设置</text>
+                <text class="menu-arrow">></text>
+            </view>
+            <view class="list-item" bindtap="goToAbout">
+                <text class="menu-text">关于</text>
+                <text class="menu-arrow">></text>
+            </view>
+        </view>
 
-    <button class="btn btn-secondary mt-20" bindtap="logout">
-      <text class="btn-text">退出登录</text>
-    </button>
-  </view>
+        <button class="btn btn-secondary mt-20" bindtap="outLogin" wx:if="{{userInfo}}">
+            <text class="btn-text">退出登录</text>
+        </button>
+
+        <button class="btn mt-20" bindtap="handleLogin" wx:if="{{!userInfo}}">
+            <text class="btn-text">登录</text>
+        </button>
+    </view>
 </view>
