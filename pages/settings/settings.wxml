@@ -13,16 +13,6 @@
     </picker>
 </view>
 
-  <view class="section">
-    <text class="label">答题音效</text>
-    <switch checked="{{enableSound}}" bindchange="onToggleSound" />
-  </view>
-
-  <view class="section">
-    <text class="label">自动播放释义</text>
-    <switch checked="{{autoPlay}}" bindchange="onToggleAutoPlay" />
-  </view>
-
   <view class="section danger">
     <button type="warn" bindtap="onClearStorage">清除缓存</button>
   </view>
