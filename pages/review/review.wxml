@@ -1,43 +1,36 @@
-<!--pages/review/review.wxml-->
+<!-- pages/review/review.wxml -->
 <view class="container">
-  <view class="card review-card animate-fade-in">
-    <view class="review-header">
-      <text class="text-title">单词复习</text>
-      <text class="text-subtitle">{{currentProgress}}/{{totalWords}} 单词</text>
-    </view>
+    <view class="card review-card animate-fade-in">
+        <view class="review-header">
+            <text class="text-title">单词复习</text>
+            <text class="text-subtitle">{{groupCount}}/{{selectedWordCount}} 单词</text>
+        </view>
 
-    <view class="word-display">
-      <text class="word">{{currentWord.english}}</text>
-      <text class="pronunciation" wx:if="{{currentWord.pronunciation}}">
-        [{{currentWord.pronunciation}}]
-      </text>
-    </view>
+        <view class="word-display">
+            <text class="word">{{currentWord.english}}</text>
+            <text class="pronunciation" wx:if="{{currentWord.pronunciation}}">
+                [{{currentWord.pronunciation}}]
+            </text>
+        </view>
 
-    <view class="meaning-section">
-      <text class="meaning" wx:if="{{showMeaning}}">{{currentWord.chinese}}</text>
-      <text class="meaning hint" wx:else>点击显示释义</text>
-    </view>
+        <view class="choices">
+            <view class="choice" wx:for="{{options}}" wx:key="index" data-index="{{index}}" bindtap="selectAnswer">
+                {{item}}
+            </view>
+        </view>
 
-    <view class="button-group">
-      <button class="btn btn-primary" bindtap="toggleMeaning">
-        <text class="btn-text">{{showMeaning ? '隐藏' : '显示'}}释义</text>
-      </button>
-      <button class="btn btn-secondary" bindtap="nextWord">
-        <text class="btn-text">下一个</text>
-      </button>
-    </view>
+        <view class="meaning-section">
+            <text class="meaning" wx:if="{{showMeaning}}">{{currentWord.chinese}}</text>
+            <text class="meaning hint" wx:else>点击显示释义</text>
+        </view>
 
-    <view class="memory-rating">
-      <text class="rating-title">记忆难度</text>
-      <view class="rating-buttons">
-        <button class="rating-btn easy" bindtap="rateMemory" data-difficulty="easy">简单</button>
-        <button class="rating-btn medium" bindtap="rateMemory" data-difficulty="medium">一般</button>
-        <button class="rating-btn hard" bindtap="rateMemory" data-difficulty="hard">困难</button>
-      </view>
+        <view class="button-group">
+            <button class="btn btn-primary" bindtap="toggleMeaning">
+                <text class="btn-text">{{showMeaning ? '隐藏' : '显示'}}释义</text>
+            </button>
+            <button class="btn btn-secondary" bindtap="loadWord">
+                <text class="btn-text">下一个</text>
+            </button>
+        </view>
     </view>
-
-    <view class="progress-bar">
-      <view class="progress" style="width: {{progressPercentage}}%"></view>
-    </view>
-  </view>
 </view>
